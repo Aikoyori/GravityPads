@@ -1,0 +1,43 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "xyz.aikoyori",
+		"id": "gravity_pads",
+		"version": "${version}",
+		"metadata": {
+			"name": "Gravity Pads",
+			"description": "literally just gravity pad",
+			"contributors": {
+				"Aikoyori": "https://aikoyori.xyz/"
+			},
+			"contact": {
+				"homepage": "https://aikoyori.xyz/"
+			},
+			"icon": "assets/gravity_pads/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"init": "xyz.aikoyori.gravity_pads.GravityPads"
+		},
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.17.0-"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": ">=4.0.0-"
+			},
+			{
+				"id": "minecraft",
+				"versions": ">=1.19.2"
+			},
+			{
+				"id": "gravity_api",
+				"versions": ">=0.7.21+quilt"
+			}
+		]
+	},
+	"mixin": "gravity_pads.mixins.json",
+	"access_widener": "gravity_pads.accesswidener"
+}

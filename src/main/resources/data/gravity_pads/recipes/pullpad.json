@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "CCC"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:copper_ingot"
+    },
+    "C": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "gravity_pads:gravity_pad_pull",
+    "count": 2
+  }
+}

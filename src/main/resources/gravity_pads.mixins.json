@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.aikoyori.gravity_pads.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "SpaceDamageMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

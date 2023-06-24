@@ -1,4 +1,24 @@
 {
   "block.gravity_pads.gravity_pad_pull" : "Pulling Gravity Pads",
-  "block.gravity_pads.gravity_pad_push" : "Pushing Gravity Pads"
+  "block.gravity_pads.gravity_pad_push" : "Pushing Gravity Pads",
+
+
+  "text.config.gravity-pads.title": "Gravity Pads Config",
+  "text.config.gravity-pads.option.antiSoftlock": "Enable Vertical Anti-Softlock",
+  "text.config.gravity-pads.option.antiSoftlock.tooltip": "When you go too high, the anti-softlock will trigger\npreventing you from going up forever\n\nDisabling this is NOT recommended for Survival play.",
+
+  "text.config.gravity-pads.option.antiSoftlockSide": "Enable Sideways Anti-Softlock",
+  "text.config.gravity-pads.option.antiSoftlockSide.tooltip": "Save as the vertical one, only that you can \nmaneuver around a bit and reach some ground manually.\nEnabling this is optional",
+  "text.config.gravity-pads.option.antiSoftlockHeight": "Vertical Anti-Softlock Height",
+  "text.config.gravity-pads.option.antiSoftlockHeight.tooltip": "At this many blocks above world height limit\nthe vertical softlock should trigger.\n\nFor example, normally world height is Y=320 and this value's default is 64,\nthus the anti-softlock will activate at Y=384\n\nNegative numbers are allowed for height LOWER than\nthe world height. Setting this to a very low number\ndisables the pad from going upwards\ncompletely but might be buggy",
+  "text.config.gravity-pads.option.antiSoftlockSideFallDistance": "Sideway Anti-Softlock Fall Distance",
+  "text.config.gravity-pads.option.antiSoftlockMethod": "Upwards Anti-Softlock Method",
+  "text.config.gravity-pads.option.antiSoftlockSideMethod": "Sideway Anti-Softlock Method",
+
+  "text.config.gravity-pads.enum.antiSoftLockMethod.reset_gravity": "Reset Gravity to Down",
+  "text.config.gravity-pads.enum.antiSoftLockMethod.tick_void": "Trigger Void Damage",
+  "text.config.gravity-pads.enum.antiSoftLockMethod.instant_death": "Instant Death",
+
+  "text.config.gravity-pads.section.up-gravity": "Upwards Gravity Anti-Softlock",
+  "text.config.gravity-pads.section.side-gravity": "Sidewards Gravity Anti-Softlock"
 }

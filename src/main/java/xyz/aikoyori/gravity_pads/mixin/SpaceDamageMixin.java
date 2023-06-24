@@ -4,6 +4,7 @@ import com.fusionflux.gravity_api.api.GravityChangerAPI;
 import com.fusionflux.gravity_api.util.Gravity;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,13 +14,40 @@ import xyz.aikoyori.gravity_pads.GravityPads;
 
 @Mixin(Entity.class)
 public class SpaceDamageMixin {
-	@Inject(method = "attemptTickInVoid", at = @At("HEAD"))
+	@Inject(method = "baseTick", at = @At("HEAD"))
 	public void gravitypads$spacedamage(CallbackInfo ci) {
 			Entity ent = (Entity)(Object)this;
+			if(GravityPads.gravityPadConfig.antiSoftlock())
+			if (GravityChangerAPI.getActualGravityDirection(ent) == Direction.UP && ent.getY() > (double)(ent.world.getTopY() + GravityPads.gravityPadConfig.antiSoftlockHeight())) {
+				//
+				switch(GravityPads.gravityPadConfig.antiSoftlockMethod()){
 
-			if (GravityChangerAPI.getActualGravityDirection(ent) == Direction.UP && ent.getY() > (double)(ent.world.getTopY() + ent.world.getGameRules().getInt(GravityPads.FALLUP_HEIGHT_DAMAGE))) {
-				//ent.tickInVoid();
-				GravityChangerAPI.setDefaultGravityDirection(ent,Direction.DOWN);
+					case RESET_GRAVITY -> {
+						GravityChangerAPI.setDefaultGravityDirection(ent,Direction.DOWN);
+					}
+					case TICK_VOID -> {
+						ent.tickInVoid();
+					}
+					case INSTANT_DEATH -> {
+						ent.damage(DamageSource.OUT_OF_WORLD,9999999);
+					}
+				}
+			}
+			if(GravityPads.gravityPadConfig.antiSoftlockSide())
+			if (ent.fallDistance >= GravityPads.gravityPadConfig.antiSoftlockSideFallDistance() && GravityChangerAPI.getActualGravityDirection(ent) != Direction.UP && GravityChangerAPI.getActualGravityDirection(ent) != Direction.DOWN) {
+				//
+				switch(GravityPads.gravityPadConfig.antiSoftlockSideMethod()){
+
+					case RESET_GRAVITY -> {
+						GravityChangerAPI.setDefaultGravityDirection(ent,Direction.DOWN);
+					}
+					case TICK_VOID -> {
+						ent.tickInVoid();
+					}
+					case INSTANT_DEATH -> {
+						ent.damage(DamageSource.OUT_OF_WORLD,9999999);
+					}
+				}
 			}
 		//GravityPads.LOGGER.info("This line is printed by an example mod mixin!");
 	}

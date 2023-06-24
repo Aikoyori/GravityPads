@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import xyz.aikoyori.gravity_pads.blocks.AbstractGravityPadBlock;
 import xyz.aikoyori.gravity_pads.blocks.GravityPadPullBlock;
 import xyz.aikoyori.gravity_pads.blocks.GravityPadPushBlock;
+import xyz.aikoyori.gravity_pads.config.GravityPadConfigModel;
+import xyz.aikoyori.gravity_pads.config.GravityPadsConfig;
 
 public class GravityPads implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -26,6 +28,7 @@ public class GravityPads implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("Gravity Pads");
 	public static final String MOD_ID = "gravity_pads";
 
+	public static final GravityPadsConfig gravityPadConfig = GravityPadsConfig.createAndLoad();
 	public static final GameRules.Key<GameRules.IntRule> FALLUP_HEIGHT_DAMAGE =
 			GameRuleRegistry.register("fallupHeightDamageAfterWorldHeight", GameRules.Category.MISC, GameRuleFactory.createIntRule(64));
 	public static final AbstractGravityPadBlock GRAVITY_PAD_PULL = new GravityPadPullBlock(QuiltBlockSettings.of(Material.METAL).hardness(1.0f));

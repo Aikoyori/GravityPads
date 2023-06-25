@@ -6,14 +6,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.aikoyori.gravity_pads.blocks.abstracted.AbstractGravityPadBlock;
-import xyz.aikoyori.gravity_pads.blocks.abstracted.AbstractNormalGravityPadBlock;
+import xyz.aikoyori.gravity_pads.blocks.abstracted.AbstractThinGravityPadBlock;
 
-public class GravityPadPullBlock extends AbstractNormalGravityPadBlock {
-	public GravityPadPullBlock(Settings settings) {
+public class ThinGravityPadPull extends AbstractThinGravityPadBlock {
+	public ThinGravityPadPull(Settings settings) {
 		super(settings);
 	}
-
 
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {

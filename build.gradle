@@ -64,13 +64,14 @@ dependencies {
 		exclude group: "net.fabricmc"
 	}
 
-	implementation("com.github.LlamaLad7:MixinExtras:0.0.10")
-	include("com.github.LlamaLad7:MixinExtras:0.0.10")
-	annotationProcessor("com.github.LlamaLad7:MixinExtras:0.0.10")
+	implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
+	include("com.github.LlamaLad7:MixinExtras:0.1.1")
+	annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
 	//owo lib
 	modImplementation "io.wispforest:owo-lib:${project.owo_version}"
 	annotationProcessor "io.wispforest:owo-lib:${project.owo_version}"
 	include "io.wispforest:owo-sentinel:${project.owo_version}"
+	modLocalRuntime("maven.modrinth:smoothboot-fabric:${project.smoothboot_version}"){}
 }
 loom {
 	accessWidenerPath = file("src/main/resources/gravity_pads.accesswidener")

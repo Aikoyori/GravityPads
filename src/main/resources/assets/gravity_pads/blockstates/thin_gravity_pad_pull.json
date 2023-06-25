@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "direction=north": { "model": "gravity_pads:block/thin_gravity_pad_pull","x": 90},
+    "direction=east": { "model": "gravity_pads:block/thin_gravity_pad_pull","x": 90,"y" : 90},
+    "direction=south": { "model": "gravity_pads:block/thin_gravity_pad_pull","x": 90 ,"y" : 180},
+    "direction=west": { "model": "gravity_pads:block/thin_gravity_pad_pull", "x": 90,"y" : 270},
+    "direction=up": { "model": "gravity_pads:block/thin_gravity_pad_pull"},
+    "direction=down": { "model": "gravity_pads:block/thin_gravity_pad_pull" ,"x" : 180}
+  }
+}

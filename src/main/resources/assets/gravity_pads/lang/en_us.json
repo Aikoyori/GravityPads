@@ -1,6 +1,9 @@
 {
-  "block.gravity_pads.gravity_pad_pull" : "Pulling Gravity Pads",
-  "block.gravity_pads.gravity_pad_push" : "Pushing Gravity Pads",
+  "block.gravity_pads.gravity_pad_pull" : "Pulling Gravity Pad",
+  "block.gravity_pads.gravity_pad_push" : "Pushing Gravity Pad",
+  "block.gravity_pads.directional_gravity_pad" : "Directional Gravity Pad",
+  "block.gravity_pads.thin_gravity_pad_pull" : "Thin Pulling Gravity Pad",
+  "block.gravity_pads.thin_gravity_pad_push" : "Thin Pushing Gravity Pad",
 
 
   "text.config.gravity-pads.title": "Gravity Pads Config",
@@ -8,17 +11,29 @@
   "text.config.gravity-pads.option.antiSoftlock.tooltip": "When you go too high, the anti-softlock will trigger\npreventing you from going up forever\n\nDisabling this is NOT recommended for Survival play.",
 
   "text.config.gravity-pads.option.antiSoftlockSide": "Enable Sideways Anti-Softlock",
-  "text.config.gravity-pads.option.antiSoftlockSide.tooltip": "Save as the vertical one, only that you can \nmaneuver around a bit and reach some ground manually.\nEnabling this is optional",
+  "text.config.gravity-pads.option.antiSoftlockSide.tooltip": "Same as the vertical one, only that you can \nmaneuver around a bit and reach some ground manually.\n\nEnabling this is optional for survival play",
   "text.config.gravity-pads.option.antiSoftlockHeight": "Vertical Anti-Softlock Height",
   "text.config.gravity-pads.option.antiSoftlockHeight.tooltip": "At this many blocks above world height limit\nthe vertical softlock should trigger.\n\nFor example, normally world height is Y=320 and this value's default is 64,\nthus the anti-softlock will activate at Y=384\n\nNegative numbers are allowed for height LOWER than\nthe world height. Setting this to a very low number\ndisables the pad from going upwards\ncompletely but might be buggy",
   "text.config.gravity-pads.option.antiSoftlockSideFallDistance": "Sideway Anti-Softlock Fall Distance",
   "text.config.gravity-pads.option.antiSoftlockMethod": "Upwards Anti-Softlock Method",
   "text.config.gravity-pads.option.antiSoftlockSideMethod": "Sideway Anti-Softlock Method",
 
+  "text.config.gravity-pads.option.directionChangeMode": "To cycle between Directional Gravity Pad's direction...",
+  "text.config.gravity-pads.option.directionChangeMode.tooltip": "This option changes how you would change the\ndirectional gravity pads' direction.",
+
   "text.config.gravity-pads.enum.antiSoftLockMethod.reset_gravity": "Reset Gravity to Down",
   "text.config.gravity-pads.enum.antiSoftLockMethod.tick_void": "Trigger Void Damage",
   "text.config.gravity-pads.enum.antiSoftLockMethod.instant_death": "Instant Death",
 
-  "text.config.gravity-pads.section.up-gravity": "Upwards Gravity Anti-Softlock",
-  "text.config.gravity-pads.section.side-gravity": "Sidewards Gravity Anti-Softlock"
+  "text.config.gravity-pads.enum.directionChangeMode.tag": "...Use any items from tag",
+  "text.config.gravity-pads.enum.directionChangeMode.empty_hand": "...Use an empty hand",
+  "text.config.gravity-pads.enum.directionChangeMode.any": "...Right click",
+  "text.config.gravity-pads.enum.directionChangeMode.none": "...Don't",
+
+  "text.config.gravity-pads.section.gameplay": "Gameplay Options",
+  "text.config.gravity-pads.section.up-gravity": "Upwards Gravity Anti-Softlock Options",
+  "text.config.gravity-pads.section.side-gravity": "Sideway Gravity Anti-Softlock Options",
+
+  "itemGroup.gravity_pads.gravity_pads": "Gravity Pads",
+  "itemGroup.gravity_pads.gravity_pads.tab.pads": "Pads"
 }

@@ -1,4 +1,4 @@
-package xyz.aikoyori.gravity_pads.blocks;
+package xyz.aikoyori.gravity_pads.blocks.abstracted;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
@@ -15,6 +15,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
@@ -26,12 +27,6 @@ public abstract class AbstractGravityPadBlock extends Block implements Waterlogg
 	public static final DirectionProperty DIRECTION = DirectionProperty.of("direction");
 
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-	private static final VoxelShape POINT_DOWN_SHAPE = Block.createCuboidShape(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
-	private static final VoxelShape POINT_UP_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
-	private static final VoxelShape POINT_EAST_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 1.0, 16.0, 16.0);
-	private static final VoxelShape POINT_WEST_SHAPE = Block.createCuboidShape(15.0, 0.0, 0.0, 16.0, 16.0, 16.0);
-	private static final VoxelShape POINT_SOUTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 1.0);
-	private static final VoxelShape POINT_NORTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 15.0, 16.0, 16.0, 16.0);
 	public AbstractGravityPadBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.getStateManager().getDefaultState().with(DIRECTION, Direction.UP).with(WATERLOGGED, false));
@@ -57,34 +52,6 @@ public abstract class AbstractGravityPadBlock extends Block implements Waterlogg
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return super.getCollisionShape(state, world, pos, context);
-	}
-
-	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		switch (state.get(DIRECTION))
-		{
-
-			case DOWN -> {
-				return POINT_DOWN_SHAPE;
-			}
-			case UP -> {
-				return POINT_UP_SHAPE;
-			}
-			case NORTH -> {
-				return POINT_NORTH_SHAPE;
-			}
-			case SOUTH -> {
-				return POINT_SOUTH_SHAPE;
-			}
-			case WEST -> {
-				return POINT_WEST_SHAPE;
-			}
-			case EAST -> {
-				return POINT_EAST_SHAPE;
-			}
-		}
-
-		return POINT_UP_SHAPE;
 	}
 
 	@Override

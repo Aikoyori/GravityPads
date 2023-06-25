@@ -1,0 +1,7 @@
+{
+  "parent": "gravity_pads:block/thin_gravity_pad",
+  "textures": {
+    "0": "gravity_pads:block/gravity_pad_pull",
+    "particle": "gravity_pads:block/gravity_pad_pull"
+  }
+}

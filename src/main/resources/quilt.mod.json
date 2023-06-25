@@ -20,8 +20,7 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "xyz.aikoyori.gravity_pads.GravityPads",
-			"modmenu" : "xyz.aikoyori.gravity_pads.config.ModMenuConfigScreen"
+			"init": "xyz.aikoyori.gravity_pads.GravityPads"
 		},
 		"depends": [
 			{

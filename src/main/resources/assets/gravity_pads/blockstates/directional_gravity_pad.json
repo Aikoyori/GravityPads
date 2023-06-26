@@ -27,18 +27,18 @@
       "direction=up,gravity_direction=west"  : { "model": "gravity_pads:block/directional_gravity_pad", "x" :   0, "y" :   270},
       "direction=down,gravity_direction=east"  : { "model": "gravity_pads:block/directional_gravity_pad", "x" :   180, "y" :   270},
 
-      "direction=north,gravity_direction=north": { "model": "gravity_pads:block/gravity_pad_push","x": 90},
-      "direction=east,gravity_direction=east": { "model": "gravity_pads:block/gravity_pad_push","x": 90,"y" : 90},
-      "direction=south,gravity_direction=south": { "model": "gravity_pads:block/gravity_pad_push","x": 90 ,"y" : 180},
-      "direction=west,gravity_direction=west": { "model": "gravity_pads:block/gravity_pad_push", "x": 90,"y" : 270},
-      "direction=up,gravity_direction=up": { "model": "gravity_pads:block/gravity_pad_push"},
-      "direction=down,gravity_direction=down": { "model": "gravity_pads:block/gravity_pad_push" ,"x" : 180},
-      "direction=north,gravity_direction=south": { "model": "gravity_pads:block/gravity_pad_pull","x": 90},
-      "direction=east,gravity_direction=west": { "model": "gravity_pads:block/gravity_pad_pull","x": 90,"y" : 90},
-      "direction=south,gravity_direction=north": { "model": "gravity_pads:block/gravity_pad_pull","x": 90 ,"y" : 180},
-      "direction=west,gravity_direction=east": { "model": "gravity_pads:block/gravity_pad_pull", "x": 90,"y" : 270},
-      "direction=up,gravity_direction=down": { "model": "gravity_pads:block/gravity_pad_pull"},
-      "direction=down,gravity_direction=up": { "model": "gravity_pads:block/gravity_pad_pull" ,"x" : 180}
+      "direction=north,gravity_direction=north": { "model": "gravity_pads:block/directional_gravity_pad_away","x": 90},
+      "direction=east,gravity_direction=east": { "model": "gravity_pads:block/directional_gravity_pad_away","x": 90,"y" : 90},
+      "direction=south,gravity_direction=south": { "model": "gravity_pads:block/directional_gravity_pad_away","x": 90 ,"y" : 180},
+      "direction=west,gravity_direction=west": { "model": "gravity_pads:block/directional_gravity_pad_away", "x": 90,"y" : 270},
+      "direction=up,gravity_direction=up": { "model": "gravity_pads:block/directional_gravity_pad_away"},
+      "direction=down,gravity_direction=down": { "model": "gravity_pads:block/directional_gravity_pad_away" ,"x" : 180},
+      "direction=north,gravity_direction=south": { "model": "gravity_pads:block/directional_gravity_pad_towards","x": 90},
+      "direction=east,gravity_direction=west": { "model": "gravity_pads:block/directional_gravity_pad_towards","x": 90,"y" : 90},
+      "direction=south,gravity_direction=north": { "model": "gravity_pads:block/directional_gravity_pad_towards","x": 90 ,"y" : 180},
+      "direction=west,gravity_direction=east": { "model": "gravity_pads:block/directional_gravity_pad_towards", "x": 90,"y" : 270},
+      "direction=up,gravity_direction=down": { "model": "gravity_pads:block/directional_gravity_pad_towards"},
+      "direction=down,gravity_direction=up": { "model": "gravity_pads:block/directional_gravity_pad_towards" ,"x" : 180}
   }
 }
 

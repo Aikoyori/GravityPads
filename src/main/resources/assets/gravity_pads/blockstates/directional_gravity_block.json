@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "gravity_direction=down": {
+      "model": "gravity_pads:block/directional_gravity_block",
+      "x": 90
+    },
+    "gravity_direction=east": {
+      "model": "gravity_pads:block/directional_gravity_block",
+      "y": 90
+    },
+    "gravity_direction=north": {
+      "model": "gravity_pads:block/directional_gravity_block"
+    },
+    "gravity_direction=south": {
+      "model": "gravity_pads:block/directional_gravity_block",
+      "y": 180
+    },
+    "gravity_direction=up": {
+      "model": "gravity_pads:block/directional_gravity_block",
+      "x": 270
+    },
+    "gravity_direction=west": {
+      "model": "gravity_pads:block/directional_gravity_block",
+      "y": 270
+    }
+  }
+}

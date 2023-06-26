@@ -1,10 +1,10 @@
-package xyz.aikoyori.gravity_pads.blocks;
+package xyz.aikoyori.gravity_pads.blocks.blocks;
 
 import com.fusionflux.gravity_api.api.GravityChangerAPI;
-import com.fusionflux.gravity_api.api.RotationParameters;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -15,7 +15,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import xyz.aikoyori.gravity_pads.GravityPads;
@@ -23,11 +25,25 @@ import xyz.aikoyori.gravity_pads.blocks.abstracted.AbstractNormalGravityPadBlock
 import xyz.aikoyori.gravity_pads.config.GravityPadConfigModel;
 import xyz.aikoyori.gravity_pads.utils.Constants;
 
-import java.util.function.Predicate;
-
-public class DirectionalGravityPad extends AbstractNormalGravityPadBlock {
-	public DirectionalGravityPad(Settings settings) {
+public class DirectionalGravityBlock extends Block {
+	public DirectionalGravityBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+		return VoxelShapes.empty();
+	}
+
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
+	}
+
+	@Override
+	public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+		return true;
+		//return super.isTranslucent(state, world, pos);
 	}
 
 	public static final DirectionProperty GRAVITY_DIRECTION = DirectionProperty.of("gravity_direction");
@@ -53,12 +69,8 @@ public class DirectionalGravityPad extends AbstractNormalGravityPadBlock {
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
-			if(player.getAbilities().allowModifyWorld &&(
-					GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.ANY ||
-					(GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.EMPTY_HAND && player.getStackInHand(hand).isEmpty()) ||
-					(GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.TAG && player.getStackInHand(hand).isIn(GravityPads.DIRECTION_CHANGER))
-			)){
-				world.setBlockState(pos,state.with(GRAVITY_DIRECTION,rotateDirection(state.get(GRAVITY_DIRECTION),state.get(DIRECTION),player.isSneaking())));
+			if(Constants.canPlayerRotate(player, hand)){
+				world.setBlockState(pos,state.with(GRAVITY_DIRECTION,rotateDirection(state.get(GRAVITY_DIRECTION),hit.getSide(),player.isSneaking())));
 
 				return ActionResult.SUCCESS;
 			}
@@ -75,6 +87,7 @@ public class DirectionalGravityPad extends AbstractNormalGravityPadBlock {
 	public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
 		int placementSide = Constants.getPlacementRegion(ctx.getHitPos(),ctx.getSide());
 		Direction gravityDirection = Constants.getGravitySide(ctx.getSide(),placementSide);
+		if(ctx.getPlayer().isSneaking()) gravityDirection = gravityDirection.getOpposite();
 		return super.getPlacementState(ctx).with(GRAVITY_DIRECTION,gravityDirection);
 	}
 

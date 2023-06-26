@@ -4,6 +4,8 @@
   "block.gravity_pads.directional_gravity_pad" : "Directional Gravity Pad",
   "block.gravity_pads.thin_gravity_pad_pull" : "Thin Pulling Gravity Pad",
   "block.gravity_pads.thin_gravity_pad_push" : "Thin Pushing Gravity Pad",
+  "block.gravity_pads.thin_directional_gravity_pad" : "Thin Directional Gravity Pad",
+  "block.gravity_pads.directional_gravity_block" : "Directional Gravity Block",
 
 
   "text.config.gravity-pads.title": "Gravity Pads Config",
@@ -19,21 +21,24 @@
   "text.config.gravity-pads.option.antiSoftlockSideMethod": "Sideway Anti-Softlock Method",
 
   "text.config.gravity-pads.option.directionChangeMode": "To cycle between Directional Gravity Pad's direction...",
+  "text.config.gravity-pads.option.directionChangeItem": "Item used to rotate",
   "text.config.gravity-pads.option.directionChangeMode.tooltip": "This option changes how you would change the\ndirectional gravity pads' direction.",
 
   "text.config.gravity-pads.enum.antiSoftLockMethod.reset_gravity": "Reset Gravity to Down",
   "text.config.gravity-pads.enum.antiSoftLockMethod.tick_void": "Trigger Void Damage",
   "text.config.gravity-pads.enum.antiSoftLockMethod.instant_death": "Instant Death",
 
-  "text.config.gravity-pads.enum.directionChangeMode.tag": "...Use any items from tag",
-  "text.config.gravity-pads.enum.directionChangeMode.empty_hand": "...Use an empty hand",
-  "text.config.gravity-pads.enum.directionChangeMode.any": "...Right click",
-  "text.config.gravity-pads.enum.directionChangeMode.none": "...Don't",
+  "text.config.gravity-pads.enum.directionChangeMode.tag": "Use any items from tag",
+  "text.config.gravity-pads.enum.directionChangeMode.custom_item": "Use item below",
+  "text.config.gravity-pads.enum.directionChangeMode.empty_hand": "Use an empty hand",
+  "text.config.gravity-pads.enum.directionChangeMode.any": "Right click",
+  "text.config.gravity-pads.enum.directionChangeMode.none": "Don't",
 
   "text.config.gravity-pads.section.gameplay": "Gameplay Options",
   "text.config.gravity-pads.section.up-gravity": "Upwards Gravity Anti-Softlock Options",
   "text.config.gravity-pads.section.side-gravity": "Sideway Gravity Anti-Softlock Options",
 
   "itemGroup.gravity_pads.gravity_pads": "Gravity Pads",
-  "itemGroup.gravity_pads.gravity_pads.tab.pads": "Pads"
+  "itemGroup.gravity_pads.gravity_pads.tab.pads": "Pads",
+  "itemGroup.gravity_pads.gravity_pads.tab.blocks": "Blocks"
 }

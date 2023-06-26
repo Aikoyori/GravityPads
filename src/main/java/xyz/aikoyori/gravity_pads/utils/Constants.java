@@ -1,11 +1,16 @@
 package xyz.aikoyori.gravity_pads.utils;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import xyz.aikoyori.gravity_pads.GravityPads;
+import xyz.aikoyori.gravity_pads.config.GravityPadConfigModel;
 
 public class Constants {
 	public static final VoxelShape POINT_DOWN_SHAPE = Block.createCuboidShape(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
@@ -56,13 +61,18 @@ public class Constants {
 				break;
 		}
 		//GravityPads.LOGGER.info("The "+x+","+y);
+		if(Math.abs(x)<0.1f&&Math.abs(y)<0.1f) return 0;
 		if(x-y>0&&x+y>0) return 1;
 		if(x-y<0&&x+y>0) return 2;
 		if(x-y<0&&x+y<0) return 3;
 		if(x-y>0&&x+y<0) return 4;
-		return 1;
+		return 0;
 	}
 	public static Direction getGravitySide(Direction side, int placementSide){
+		if(placementSide==0)
+		{
+			return side;
+		}
 		return switch (side){
 
 			case UP, DOWN -> {
@@ -93,5 +103,14 @@ public class Constants {
 				}
 			}
 		};
+	}
+	public static boolean canPlayerRotate(PlayerEntity player, Hand hand)
+	{
+		return (player.getAbilities().allowModifyWorld &&(
+				GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.ANY ||
+						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.CUSTOM_ITEM && player.getStackInHand(hand).getItem() == Registry.ITEM.get(Identifier.splitOn(GravityPads.gravityPadConfig.directionChanger(),":".charAt(0)))) ||
+						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.EMPTY_HAND && player.getStackInHand(Hand.MAIN_HAND).isEmpty()) ||
+						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.TAG && player.getStackInHand(Hand.MAIN_HAND).isIn(GravityPads.DIRECTION_CHANGER))
+		));
 	}
 }

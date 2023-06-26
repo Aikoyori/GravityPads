@@ -5,46 +5,23 @@ import com.google.common.base.Suppliers;
 import com.mojang.blaze3d.framebuffer.Framebuffer;
 import com.mojang.blaze3d.framebuffer.SimpleFramebuffer;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.OverlayVertexConsumer;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import io.wispforest.owo.ui.component.Components;
-import io.wispforest.owo.ui.container.Containers;
-import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.event.WindowResizeCallback;
-import io.wispforest.owo.ui.hud.Hud;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.predicate.block.BlockStatePredicate;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
-import org.apache.commons.lang3.mutable.MutableBoolean;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL30C;
-import xyz.aikoyori.gravity_pads.GravityPads;
-import xyz.aikoyori.gravity_pads.blocks.DirectionalGravityPad;
-import xyz.aikoyori.gravity_pads.registry.GPBlockRegistryContainer;
+import xyz.aikoyori.gravity_pads.blocks.pads.DirectionalGravityPad;
+import xyz.aikoyori.gravity_pads.registry.GPPads;
 import xyz.aikoyori.gravity_pads.utils.Constants;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PadPreviewOverlay {
 
@@ -71,7 +48,7 @@ public class PadPreviewOverlay {
 			var testPos = new BlockPos.Mutable();
 			MinecraftClient.getInstance().getBlockRenderManager().renderBlock(Blocks.COMMAND_BLOCK.getDefaultState(),context.camera().getBlockPos(),context.world(),matrices,context.consumers().getBuffer(RenderLayer.getTranslucent()),true,context.world().getRandom());
 
-				if(MinecraftClient.getInstance().player.isHolding(GPBlockRegistryContainer.DIRECTIONAL_GRAVITY_PAD.asItem()))
+				if(MinecraftClient.getInstance().player.isHolding(GPPads.DIRECTIONAL_GRAVITY_PAD.asItem()))
 				{
 					HitResult hit = MinecraftClient.getInstance().crosshairTarget;
 					if(hit.getType() == HitResult.Type.BLOCK)
@@ -81,7 +58,7 @@ public class PadPreviewOverlay {
 						//matrices.translate(-0.5f,-.5f,-.5f);
 						int placementSide = Constants.getPlacementRegion(bhr.getPos(),bhr.getSide());
 						Direction gravityDirection = Constants.getGravitySide(bhr.getSide(),placementSide);
-						BlockState state = GPBlockRegistryContainer.DIRECTIONAL_GRAVITY_PAD.getDefaultState().with(DirectionalGravityPad.DIRECTION,bhr.getSide()).with(DirectionalGravityPad.GRAVITY_DIRECTION,gravityDirection);
+						BlockState state = GPPads.DIRECTIONAL_GRAVITY_PAD.getDefaultState().with(DirectionalGravityPad.DIRECTION,bhr.getSide()).with(DirectionalGravityPad.GRAVITY_DIRECTION,gravityDirection);
 						BlockRenderManager brm = MinecraftClient.getInstance().getBlockRenderManager();
 						VertexConsumer vx = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers().getBuffer(RenderLayer.getTranslucent());
 						BlockPos bp = bhr.getBlockPos().add(bhr.getSide().getVector()).multiply(-1);

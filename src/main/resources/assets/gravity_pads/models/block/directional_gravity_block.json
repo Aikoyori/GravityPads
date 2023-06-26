@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_directional",
+  "textures": {
+    "particle": "gravity_pads:block/directional_gravity_block_towards",
+    "down": "gravity_pads:block/directional_gravity_block",
+    "up": "gravity_pads:block/directional_gravity_block",
+    "north": "gravity_pads:block/directional_gravity_block_towards",
+    "east": "gravity_pads:block/directional_gravity_block",
+    "south": "gravity_pads:block/directional_gravity_block_away",
+    "west": "gravity_pads:block/directional_gravity_block"
+  }
+}

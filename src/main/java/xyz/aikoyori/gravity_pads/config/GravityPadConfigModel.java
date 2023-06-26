@@ -23,6 +23,7 @@ import java.util.Map;
 public class GravityPadConfigModel {
 	@SectionHeader("gameplay")
 	public DirectionChangeMode directionChangeMode = DirectionChangeMode.TAG;
+	public String directionChanger = "minecraft:stick";
 	@SectionHeader("up-gravity")
 	public boolean antiSoftlock = true;
 
@@ -34,7 +35,7 @@ public class GravityPadConfigModel {
 	public AntiSoftLockMethod antiSoftlockSideMethod = AntiSoftLockMethod.RESET_GRAVITY;
 
 	public enum DirectionChangeMode{
-		TAG,EMPTY_HAND,ANY,NONE,
+		TAG,CUSTOM_ITEM,EMPTY_HAND,ANY,NONE,
 	}
 
 	public enum AntiSoftLockMethod{

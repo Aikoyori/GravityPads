@@ -124,7 +124,7 @@ public class PadPreviewOverlay {
 			RenderSystem.enableBlend();
 			RenderSystem.defaultBlendFunc();
 
-			client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, (float) (Math.sin(context.gameRenderer().ticks/50f)+1/4f)});
+			client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.5f});
 			framebuffer.draw(framebuffer.textureWidth, framebuffer.textureHeight, false);
 			client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 1});
 		});

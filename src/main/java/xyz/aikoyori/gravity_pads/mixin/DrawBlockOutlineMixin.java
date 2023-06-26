@@ -1,5 +1,6 @@
 package xyz.aikoyori.gravity_pads.mixin;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -47,8 +48,12 @@ public class DrawBlockOutlineMixin {
 				BlockPos bp = bhr.getBlockPos().add(bhr.getSide().getVector());
 				Vec3d distanced = MinecraftClient.getInstance().player.getClientCameraPosVec(tickDelta).subtract(Vec3d.of(bp)).multiply(-1);
 				matrices.translate((float)distanced.getX(),(float)distanced.getY(),(float)distanced.getZ());
-
+				RenderSystem.enableBlend();
+				RenderSystem.defaultBlendFunc();
+				RenderSystem.setShaderColor(1,1,1,0.25f);
+				MinecraftClient.getInstance().gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, .5f});
 				brm.getModelRenderer().render(world,brm.getModel(state),state,bp,matrices,vx,false,world.getRandom(),state.getRenderingSeed(bp),OverlayTexture.DEFAULT_UV);
+				MinecraftClient.getInstance().gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 1});
 			}
 		}
 		matrices.pop();

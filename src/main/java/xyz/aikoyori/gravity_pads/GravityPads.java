@@ -13,6 +13,7 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.aikoyori.gravity_pads.client.PadPreviewOverlay;
 import xyz.aikoyori.gravity_pads.config.GravityPadsConfig;
 import xyz.aikoyori.gravity_pads.registry.GPBlockRegistryContainer;
 

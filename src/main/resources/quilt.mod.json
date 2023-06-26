@@ -20,7 +20,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "xyz.aikoyori.gravity_pads.GravityPads"
+			"init": "xyz.aikoyori.gravity_pads.GravityPads",
+			"client_init": "xyz.aikoyori.gravity_pads.client.GravityPadsClient"
 		},
 		"depends": [
 			{

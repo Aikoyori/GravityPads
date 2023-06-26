@@ -71,6 +71,7 @@ public class ThinDirectionalGravityPad extends AbstractThinGravityPadBlock {
 	public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
 		int placementSide = Constants.getPlacementRegion(ctx.getHitPos(),ctx.getSide());
 		Direction gravityDirection = Constants.getGravitySide(ctx.getSide(),placementSide);
+		if(ctx.getPlayer().isSneaking()) gravityDirection = gravityDirection.getOpposite();
 		return super.getPlacementState(ctx).with(GRAVITY_DIRECTION,gravityDirection);
 	}
 

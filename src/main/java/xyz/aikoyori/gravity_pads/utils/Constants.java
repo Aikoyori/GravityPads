@@ -61,7 +61,7 @@ public class Constants {
 				break;
 		}
 		//GravityPads.LOGGER.info("The "+x+","+y);
-		if(Math.abs(x)<0.1f&&Math.abs(y)<0.1f) return 0;
+		if(Math.abs(x)<0.2f&&Math.abs(y)<0.2f) return 0;
 		if(x-y>0&&x+y>0) return 1;
 		if(x-y<0&&x+y>0) return 2;
 		if(x-y<0&&x+y<0) return 3;

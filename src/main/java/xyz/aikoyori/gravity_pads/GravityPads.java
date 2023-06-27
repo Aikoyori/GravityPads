@@ -39,7 +39,6 @@ public class GravityPads implements ModInitializer {
 		FieldRegistrationHandler.register(GPPads.class,MOD_ID,false);
 		FieldRegistrationHandler.register(GPBlocks.class,MOD_ID,false);
 		GRAVITY_PADS_ITEMS_GROUP.initialize();
-		BlockRenderLayerMap.INSTANCE.putBlock(GPBlocks.DIRECTIONAL_GRAVITY_BLOCK, RenderLayer.getTranslucent());
 		//LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
 	}
 

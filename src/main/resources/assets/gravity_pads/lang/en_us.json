@@ -21,7 +21,7 @@
   "text.config.gravity-pads.option.antiSoftlockSideMethod": "Sideway Anti-Softlock Method",
 
   "text.config.gravity-pads.option.directionChangeMode": "To cycle between Directional Gravity Pad's direction...",
-  "text.config.gravity-pads.option.directionChangeItem": "Item used to rotate",
+  "text.config.gravity-pads.option.directionChanger": "Item used to rotate",
   "text.config.gravity-pads.option.directionChangeMode.tooltip": "This option changes how you would change the\ndirectional gravity pads' direction.",
 
   "text.config.gravity-pads.enum.antiSoftLockMethod.reset_gravity": "Reset Gravity to Down",

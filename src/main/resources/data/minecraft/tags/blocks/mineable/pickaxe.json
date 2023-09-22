@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "gravity_pads:gravity_pad_pull",
+    "gravity_pads:gravity_pad_push",
+    "gravity_pads:thin_gravity_pad_pull",
+    "gravity_pads:thin_gravity_pad_push",
+    "gravity_pads:directional_gravity_pad",
+    "gravity_pads:thin_directional_gravity_pad",
+    "gravity_pads:directional_gravity_block"
+  ]
+}

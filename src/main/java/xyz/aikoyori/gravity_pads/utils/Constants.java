@@ -2,11 +2,11 @@ package xyz.aikoyori.gravity_pads.utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import xyz.aikoyori.gravity_pads.GravityPads;
@@ -108,7 +108,7 @@ public class Constants {
 	{
 		return (player.getAbilities().allowModifyWorld &&(
 				GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.ANY ||
-						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.CUSTOM_ITEM && player.getStackInHand(hand).getItem() == Registry.ITEM.get(Identifier.splitOn(GravityPads.gravityPadConfig.directionChanger(),":".charAt(0)))) ||
+						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.CUSTOM_ITEM && player.getStackInHand(hand).getItem() == Registries.ITEM.get(Identifier.splitOn(GravityPads.gravityPadConfig.directionChanger(),":".charAt(0)))) ||
 						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.EMPTY_HAND && player.getStackInHand(Hand.MAIN_HAND).isEmpty()) ||
 						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.TAG && player.getStackInHand(Hand.MAIN_HAND).isIn(GravityPads.DIRECTION_CHANGER))
 		));

@@ -43,7 +43,6 @@ public class DirectionalGravityBlock extends Block {
 	@Override
 	public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
 		return true;
-		//return super.isTranslucent(state, world, pos);
 	}
 
 	public static final DirectionProperty GRAVITY_DIRECTION = DirectionProperty.of("gravity_direction");

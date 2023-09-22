@@ -8,9 +8,10 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
@@ -26,13 +27,13 @@ public class GravityPads implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("Gravity Pads");
 	public static final String MOD_ID = "gravity_pads";
 	public static final OwoItemGroup GRAVITY_PADS_ITEMS_GROUP = OwoItemGroup.builder(makeId("gravity_pads"),()->
-		new ItemStack(GPPads.GRAVITY_PAD_PULL)).initializer(owoItemGroup -> {
-			owoItemGroup.addTab(Icon.of(new ItemStack(GPPads.GRAVITY_PAD_PUSH.asItem(),1)),"pads",null);
-			owoItemGroup.addTab(Icon.of(new ItemStack(GPBlocks.DIRECTIONAL_GRAVITY_BLOCK.asItem(),1)),"blocks",null);
+			Icon.of(new ItemStack(GPPads.GRAVITY_PAD_PULL))).initializer(owoItemGroup -> {
+			owoItemGroup.addTab(Icon.of(new ItemStack(GPPads.GRAVITY_PAD_PUSH.asItem(),1)),"pads",null,false);
+			owoItemGroup.addTab(Icon.of(new ItemStack(GPBlocks.DIRECTIONAL_GRAVITY_BLOCK.asItem(),1)),"blocks",null,false);
 	}).build();
 
 	public static final GravityPadsConfig gravityPadConfig = GravityPadsConfig.createAndLoad();
-	public static final TagKey<Item> DIRECTION_CHANGER = TagKey.of(Registry.ITEM_KEY, new Identifier(MOD_ID, "direction_changer"));
+	public static final TagKey<Item> DIRECTION_CHANGER = TagKey.of(Registries.ITEM.getKey(), new Identifier(MOD_ID, "direction_changer"));
 	@Override
 	public void onInitialize(ModContainer mod) {
 		MixinExtrasBootstrap.init();

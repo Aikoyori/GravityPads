@@ -14,10 +14,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.VertexConsumerProvider.Immediate;
 import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos.Mutable;
+import org.joml.Quaternionf;
 import org.lwjgl.opengl.GL30C;
 import xyz.aikoyori.gravity_pads.blocks.pads.DirectionalGravityPad;
 import xyz.aikoyori.gravity_pads.registry.GPPads;
@@ -71,7 +75,7 @@ public class PadPreviewOverlay {
 						//matrices.translate(.5, .5, .5);
 						//matrices.scale(1.0001f, 1.0001f, 1.0001f);
 						//matrices.translate(-.5, -.5, -.5);
-						matrices.multiply(new Quaternion(0,0,0,1));
+						matrices.multiply(new Quaternionf(0,0,0,1));
 
 						//matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(180,180,0)));
 

@@ -34,7 +34,7 @@ public class GravityPadConfigModel {
 	public int antiSoftlockSideFallDistance = 384;
 	public AntiSoftLockMethod antiSoftlockSideMethod = AntiSoftLockMethod.RESET_GRAVITY;
 	@SectionHeader("experimental")
-	public boolean enablePlacementHelper = false;
+	public boolean enablePlacementHelper = true;
 	public enum DirectionChangeMode{
 		TAG,CUSTOM_ITEM,EMPTY_HAND,ANY,NONE,
 	}

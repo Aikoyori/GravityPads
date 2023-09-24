@@ -1,16 +1,26 @@
 package xyz.aikoyori.gravity_pads.utils;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.aikoyori.gravity_pads.GravityPads;
+import xyz.aikoyori.gravity_pads.blocks.blocks.DirectionalGravityBlock;
+import xyz.aikoyori.gravity_pads.blocks.pads.DirectionalGravityPad;
+import xyz.aikoyori.gravity_pads.blocks.pads.ThinDirectionalGravityPad;
 import xyz.aikoyori.gravity_pads.config.GravityPadConfigModel;
+import xyz.aikoyori.gravity_pads.registry.GPBlocks;
+import xyz.aikoyori.gravity_pads.registry.GPPads;
 
 public class Constants {
 	public static final VoxelShape POINT_DOWN_SHAPE = Block.createCuboidShape(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
@@ -68,6 +78,12 @@ public class Constants {
 		if(x-y>0&&x+y<0) return 4;
 		return 0;
 	}
+	public static Direction getGravitySideAffectedByPlayer(Direction side, int placementSide, PlayerEntity player)
+	{
+		Direction dir = getGravitySide(side,placementSide);
+		if(player.isSneaky()) dir = dir.getOpposite();
+		return dir;
+	}
 	public static Direction getGravitySide(Direction side, int placementSide){
 		if(placementSide==0)
 		{
@@ -113,4 +129,30 @@ public class Constants {
 						(GravityPads.gravityPadConfig.directionChangeMode()==GravityPadConfigModel.DirectionChangeMode.TAG && player.getStackInHand(Hand.MAIN_HAND).isIn(GravityPads.DIRECTION_CHANGER))
 		));
 	}
+
+	@Nullable
+	public static BlockState alignmentHelperType(ItemStack stack, BlockHitResult bhr, PlayerEntity player)
+	{
+		if(stack.getItem() == GPPads.DIRECTIONAL_GRAVITY_PAD.asItem())
+		{
+			int placementSide = getPlacementRegion(bhr.getPos(),bhr.getSide());
+			Direction gravityDirection = getGravitySideAffectedByPlayer(bhr.getSide(),placementSide,player);
+			return GPPads.DIRECTIONAL_GRAVITY_PAD.getDefaultState().with(DirectionalGravityPad.DIRECTION,bhr.getSide()).with(DirectionalGravityPad.GRAVITY_DIRECTION,gravityDirection);
+
+		}
+		if(stack.getItem() == GPPads.THIN_DIRECTIONAL_GRAVITY_PAD.asItem())
+		{
+			int placementSide = getPlacementRegion(bhr.getPos(),bhr.getSide());
+			Direction gravityDirection = getGravitySideAffectedByPlayer(bhr.getSide(),placementSide,player);
+			return GPPads.THIN_DIRECTIONAL_GRAVITY_PAD.getDefaultState().with(ThinDirectionalGravityPad.DIRECTION,bhr.getSide()).with(ThinDirectionalGravityPad.GRAVITY_DIRECTION,gravityDirection);
+		}
+		if(stack.getItem() == GPBlocks.DIRECTIONAL_GRAVITY_BLOCK.asItem())
+		{
+			int placementSide = getPlacementRegion(bhr.getPos(),bhr.getSide());
+			Direction gravityDirection = getGravitySideAffectedByPlayer(bhr.getSide(),placementSide,player);
+			return GPBlocks.DIRECTIONAL_GRAVITY_BLOCK.getDefaultState().with(DirectionalGravityBlock.GRAVITY_DIRECTION,gravityDirection);
+		}
+		return null;
+	}
+
 }

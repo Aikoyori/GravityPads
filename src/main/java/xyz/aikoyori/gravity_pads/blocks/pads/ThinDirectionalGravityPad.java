@@ -49,15 +49,11 @@ public class ThinDirectionalGravityPad extends AbstractThinGravityPadBlock {
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
-			if(player.getAbilities().allowModifyWorld &&(
-					GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.ANY ||
-					(GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.EMPTY_HAND && player.getStackInHand(hand).isEmpty()) ||
-					(GravityPads.gravityPadConfig.directionChangeMode()== GravityPadConfigModel.DirectionChangeMode.TAG && player.getStackInHand(hand).isIn(GravityPads.DIRECTION_CHANGER))
-			)){
-				world.setBlockState(pos,state.with(GRAVITY_DIRECTION,rotateDirection(state.get(GRAVITY_DIRECTION),state.get(DIRECTION),player.isSneaking())));
+		if(Constants.canPlayerRotate(player, hand)){
+			world.setBlockState(pos,state.with(GRAVITY_DIRECTION,rotateDirection(state.get(GRAVITY_DIRECTION),hit.getSide(),player.isSneaking())));
 
-				return ActionResult.SUCCESS;
-			}
+			return ActionResult.SUCCESS;
+		}
 
 		return super.onUse(state, world, pos, player, hand, hit);
 	}

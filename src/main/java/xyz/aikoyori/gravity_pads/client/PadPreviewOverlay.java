@@ -1,5 +1,6 @@
 package xyz.aikoyori.gravity_pads.client;
 
+import com.fusionflux.gravity_api.util.QuaternionUtil;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.mojang.blaze3d.framebuffer.Framebuffer;
@@ -11,6 +12,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -18,12 +20,16 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.VertexConsumerProvider.Immediate;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.BlockPos.Mutable;
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.lwjgl.opengl.GL30C;
+import org.lwjgl.system.MathUtil;
 import xyz.aikoyori.gravity_pads.GravityPads;
 import xyz.aikoyori.gravity_pads.blocks.pads.DirectionalGravityPad;
 import xyz.aikoyori.gravity_pads.config.GravityPadsConfig;
@@ -69,27 +75,22 @@ public class PadPreviewOverlay {
 				matrices.translate(-context.camera().getPos().x, -context.camera().getPos().y, -context.camera().getPos().z);
 				var client = MinecraftClient.getInstance();
 				var effectConsumers = client.getBufferBuilders().getEffectVertexConsumers();
-				var testPos = new BlockPos.Mutable();
-				MinecraftClient.getInstance().getBlockRenderManager().renderBlock(Blocks.COMMAND_BLOCK.getDefaultState(),context.camera().getBlockPos(),context.world(),matrices,context.consumers().getBuffer(RenderLayer.getTranslucent()),true,context.world().getRandom());
-
-				if(MinecraftClient.getInstance().player.isHolding(GPPads.DIRECTIONAL_GRAVITY_PAD.asItem()))
-				{
-					HitResult hit = MinecraftClient.getInstance().crosshairTarget;
-					if(hit.getType() == HitResult.Type.BLOCK)
+				HitResult hit = MinecraftClient.getInstance().crosshairTarget;
+                assert hit != null;
+                if(hit.getType() == HitResult.Type.BLOCK)
 					{
-						//GravityPads.LOGGER.info("IT IS GETTING CALLED :3");
 
 						BlockHitResult bhr = (BlockHitResult)hit;
-						//matrices.translate(-0.5f,-.5f,-.5f);
-						int placementSide = Constants.getPlacementRegion(bhr.getPos(),bhr.getSide());
-						Direction gravityDirection = Constants.getGravitySide(bhr.getSide(),placementSide);
-						BlockState state = GPPads.DIRECTIONAL_GRAVITY_PAD.getDefaultState().with(DirectionalGravityPad.DIRECTION,bhr.getSide()).with(DirectionalGravityPad.GRAVITY_DIRECTION,gravityDirection);
-						BlockPos bp = bhr.getBlockPos().add(bhr.getSide().getVector()).multiply(-1);
-						matrices.translate(bp.getX(), bp.getY(), bp.getZ());
+						BlockPos bp = bhr.getBlockPos().add(bhr.getSide().getVector());
+						BlockState state = Constants.alignmentHelperType(MinecraftClient.getInstance().player.getMainHandStack(),bhr, client.player);
+						BlockState state2 = Constants.alignmentHelperType(MinecraftClient.getInstance().player.getOffHandStack(),bhr, client.player);
+						if(state!=null)
+							renderOverlayBlock(matrices,context.consumers(),bp,state);
+						if(state2!=null)
+							renderOverlayBlock(matrices,context.consumers(),bp,state2);
 						RenderSystem.enableBlend();
 						RenderSystem.defaultBlendFunc();
-						renderOverlayBlock(matrices,context.consumers(),bp,state);
-					}
+
 				}
 
 				matrices.pop();
@@ -108,7 +109,7 @@ public class PadPreviewOverlay {
 				RenderSystem.enableBlend();
 				RenderSystem.defaultBlendFunc();
 
-				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.5f});
+				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.25f+(float) (Math.sin(Util.getMeasuringTimeMs()/100f)/4.0f)});
 				framebuffer.draw(framebuffer.textureWidth, framebuffer.textureHeight, false);
 				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 1});
 

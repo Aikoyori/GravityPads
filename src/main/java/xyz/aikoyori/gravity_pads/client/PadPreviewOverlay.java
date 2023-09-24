@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -23,7 +24,9 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.BlockPos.Mutable;
 import org.joml.Quaternionf;
 import org.lwjgl.opengl.GL30C;
+import xyz.aikoyori.gravity_pads.GravityPads;
 import xyz.aikoyori.gravity_pads.blocks.pads.DirectionalGravityPad;
+import xyz.aikoyori.gravity_pads.config.GravityPadsConfig;
 import xyz.aikoyori.gravity_pads.registry.GPPads;
 import xyz.aikoyori.gravity_pads.utils.Constants;
 
@@ -37,77 +40,79 @@ public class PadPreviewOverlay {
 		return framebuffer;
 	});
 
+	private static void renderOverlayBlock(MatrixStack matrices, VertexConsumerProvider consumers, BlockPos offsetInStructure, BlockState state) {
+		matrices.push();
+		matrices.translate(offsetInStructure.getX(), offsetInStructure.getY(), offsetInStructure.getZ());
 
+		matrices.translate(.5, .5, .5);
+		matrices.scale(1.0001f, 1.0001f, 1.0001f);
+		matrices.translate(-.5, -.5, -.5);
+
+		MinecraftClient.getInstance().getBlockRenderManager().renderBlockAsEntity(
+				state,
+				matrices,
+				consumers,
+				LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
+				OverlayTexture.DEFAULT_UV
+		);
+		matrices.pop();
+	}
 
 	public static void initialize() {
 		WorldRenderEvents.LAST.register(context -> {
-			var matrices = context.matrixStack();
-			matrices.push();
+			if(GravityPads.gravityPadConfig.enablePlacementHelper())
+			{
+				var matrices = context.matrixStack();
+				matrices.push();
 
-			//GravityPads.LOGGER.info("IT IS GETTING CALLED :3");
 
-			matrices.translate(-context.camera().getPos().x, -context.camera().getPos().y, -context.camera().getPos().z);
-			var client = MinecraftClient.getInstance();
-			var effectConsumers = client.getBufferBuilders().getEffectVertexConsumers();
-			var testPos = new BlockPos.Mutable();
-			MinecraftClient.getInstance().getBlockRenderManager().renderBlock(Blocks.COMMAND_BLOCK.getDefaultState(),context.camera().getBlockPos(),context.world(),matrices,context.consumers().getBuffer(RenderLayer.getTranslucent()),true,context.world().getRandom());
+				matrices.translate(-context.camera().getPos().x, -context.camera().getPos().y, -context.camera().getPos().z);
+				var client = MinecraftClient.getInstance();
+				var effectConsumers = client.getBufferBuilders().getEffectVertexConsumers();
+				var testPos = new BlockPos.Mutable();
+				MinecraftClient.getInstance().getBlockRenderManager().renderBlock(Blocks.COMMAND_BLOCK.getDefaultState(),context.camera().getBlockPos(),context.world(),matrices,context.consumers().getBuffer(RenderLayer.getTranslucent()),true,context.world().getRandom());
 
 				if(MinecraftClient.getInstance().player.isHolding(GPPads.DIRECTIONAL_GRAVITY_PAD.asItem()))
 				{
 					HitResult hit = MinecraftClient.getInstance().crosshairTarget;
 					if(hit.getType() == HitResult.Type.BLOCK)
 					{
+						//GravityPads.LOGGER.info("IT IS GETTING CALLED :3");
 
 						BlockHitResult bhr = (BlockHitResult)hit;
 						//matrices.translate(-0.5f,-.5f,-.5f);
 						int placementSide = Constants.getPlacementRegion(bhr.getPos(),bhr.getSide());
 						Direction gravityDirection = Constants.getGravitySide(bhr.getSide(),placementSide);
 						BlockState state = GPPads.DIRECTIONAL_GRAVITY_PAD.getDefaultState().with(DirectionalGravityPad.DIRECTION,bhr.getSide()).with(DirectionalGravityPad.GRAVITY_DIRECTION,gravityDirection);
-						BlockRenderManager brm = MinecraftClient.getInstance().getBlockRenderManager();
-						VertexConsumer vx = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers().getBuffer(RenderLayer.getTranslucent());
 						BlockPos bp = bhr.getBlockPos().add(bhr.getSide().getVector()).multiply(-1);
-						/*
-						Vec3d distanced = MinecraftClient.getInstance().player.getClientCameraPosVec(context.tickDelta()).multiply(-1).subtract(Vec3d.of(bp));
-						matrices.translate((float)distanced.getX(),(float)distanced.getY(),(float)distanced.getZ());
-						matrices.multiply(Quaternion.fromEulerXyz(0,90,0));*/
-						//matrices.translate((float)bp.getX(),(float)bp.getY(),(float)bp.getZ());
-
-						//matrices.translate(.5, .5, .5);
-						//matrices.scale(1.0001f, 1.0001f, 1.0001f);
-						//matrices.translate(-.5, -.5, -.5);
-						matrices.multiply(new Quaternionf(0,0,0,1));
-
-						//matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(180,180,0)));
-
 						matrices.translate(bp.getX(), bp.getY(), bp.getZ());
 						RenderSystem.enableBlend();
 						RenderSystem.defaultBlendFunc();
-						//RenderSystem.setShaderColor(1,1,1,0.25f);
-						//brm.getModelRenderer().render(context.world(),brm.getModel(state),state,bp,matrices,vx,false,context.world().getRandom(),state.getRenderingSeed(bp),OverlayTexture.DEFAULT_UV);
-						brm.renderBlockAsEntity(state,matrices,context.consumers(),16777215,OverlayTexture.DEFAULT_UV);
+						renderOverlayBlock(matrices,context.consumers(),bp,state);
 					}
+				}
+
+				matrices.pop();
+
+				var framebuffer = FRAMEBUFFER.get();
+				framebuffer.clear(MinecraftClient.IS_SYSTEM_MAC);
+				framebuffer.beginWrite(false);
+
+				GL30C.glBindFramebuffer(GL30C.GL_READ_FRAMEBUFFER, client.getFramebuffer().framebufferId);
+				GL30C.glBlitFramebuffer(0, 0, framebuffer.textureWidth, framebuffer.textureHeight, 0, 0, client.getFramebuffer().textureWidth, client.getFramebuffer().textureHeight, GL30C.GL_DEPTH_BUFFER_BIT, GL30C.GL_NEAREST);
+
+				if (context.consumers() instanceof VertexConsumerProvider.Immediate immediate) immediate.draw();
+				effectConsumers.draw();
+				client.getFramebuffer().beginWrite(false);
+
+				RenderSystem.enableBlend();
+				RenderSystem.defaultBlendFunc();
+
+				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.5f});
+				framebuffer.draw(framebuffer.textureWidth, framebuffer.textureHeight, false);
+				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 1});
 
 			}
-
-			matrices.pop();
-
-			var framebuffer = FRAMEBUFFER.get();
-			framebuffer.clear(MinecraftClient.IS_SYSTEM_MAC);
-			framebuffer.beginWrite(false);
-
-			GL30C.glBindFramebuffer(GL30C.GL_READ_FRAMEBUFFER, client.getFramebuffer().framebufferId);
-			GL30C.glBlitFramebuffer(0, 0, framebuffer.textureWidth, framebuffer.textureHeight, 0, 0, client.getFramebuffer().textureWidth, client.getFramebuffer().textureHeight, GL30C.GL_DEPTH_BUFFER_BIT, GL30C.GL_NEAREST);
-
-			if (context.consumers() instanceof VertexConsumerProvider.Immediate immediate) immediate.draw();
-			effectConsumers.draw();
-			client.getFramebuffer().beginWrite(false);
-
-			RenderSystem.enableBlend();
-			RenderSystem.defaultBlendFunc();
-
-			client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.5f});
-			framebuffer.draw(framebuffer.textureWidth, framebuffer.textureHeight, false);
-			client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 1});
 		});
 
 		WindowResizeCallback.EVENT.register((client, window) -> {

@@ -19,6 +19,8 @@
   "text.config.gravity-pads.option.antiSoftlockSideFallDistance": "Sideway Anti-Softlock Fall Distance",
   "text.config.gravity-pads.option.antiSoftlockMethod": "Upwards Anti-Softlock Method",
   "text.config.gravity-pads.option.antiSoftlockSideMethod": "Sideway Anti-Softlock Method",
+  "text.config.gravity-pads.option.enablePlacementHelper": "Enable Placement Helper",
+  "text.config.gravity-pads.option.enablePlacementHelper.tooltip": "Shows a translucent placement helper to help you place\nblocks like directional gravity pads and blocks.",
 
   "text.config.gravity-pads.option.directionChangeMode": "To cycle between Directional Gravity Pad's direction...",
   "text.config.gravity-pads.option.directionChanger": "Item used to rotate",
@@ -37,6 +39,7 @@
   "text.config.gravity-pads.section.gameplay": "Gameplay Options",
   "text.config.gravity-pads.section.up-gravity": "Upwards Gravity Anti-Softlock Options",
   "text.config.gravity-pads.section.side-gravity": "Sideway Gravity Anti-Softlock Options",
+  "text.config.gravity-pads.section.experimental": "Experimental - Proceed with caution!",
 
   "itemGroup.gravity_pads.gravity_pads": "Gravity Pads",
   "itemGroup.gravity_pads.gravity_pads.tab.pads": "Pads",

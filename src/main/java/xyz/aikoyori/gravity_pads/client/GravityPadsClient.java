@@ -11,6 +11,6 @@ public class GravityPadsClient implements ClientModInitializer {
 	public void onInitializeClient(ModContainer mod) {
 		BlockRenderLayerMap.INSTANCE.putBlock(GPBlocks.DIRECTIONAL_GRAVITY_BLOCK, RenderLayer.getTranslucent());
 		// i give up for now
-		//PadPreviewOverlay.initialize();
+		PadPreviewOverlay.initialize();
 	}
 }

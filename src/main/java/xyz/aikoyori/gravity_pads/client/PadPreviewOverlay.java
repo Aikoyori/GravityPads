@@ -81,7 +81,11 @@ public class PadPreviewOverlay {
 					{
 
 						BlockHitResult bhr = (BlockHitResult)hit;
-						BlockPos bp = bhr.getBlockPos().add(bhr.getSide().getVector());
+						BlockPos bp = bhr.getBlockPos();
+						if(!context.world().getBlockState(bhr.getBlockPos()).materialReplaceable())
+						{
+							bp = bp.add(bhr.getSide().getVector());
+						}
 						BlockState state = Constants.alignmentHelperType(MinecraftClient.getInstance().player.getMainHandStack(),bhr, client.player);
 						BlockState state2 = Constants.alignmentHelperType(MinecraftClient.getInstance().player.getOffHandStack(),bhr, client.player);
 						if(state!=null)
@@ -109,7 +113,7 @@ public class PadPreviewOverlay {
 				RenderSystem.enableBlend();
 				RenderSystem.defaultBlendFunc();
 
-				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.25f+(float) (Math.sin(Util.getMeasuringTimeMs()/100f)/4.0f)});
+				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 0.5f+(float) (Math.sin(Util.getMeasuringTimeMs()/200f)/5.0f)});
 				framebuffer.draw(framebuffer.textureWidth, framebuffer.textureHeight, false);
 				client.gameRenderer.blitScreenShader.colorModulator.setFloats(new float[]{1, 1, 1, 1});
 
